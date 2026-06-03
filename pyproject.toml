@@ -1,0 +1,18 @@
+[project]
+name = "dcs-sg"
+version = "0.1.0"
+description = "Demand-Capability-Scale Signal Generator for AMC boundary and stress tests"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=2.0",
+    "h5py>=3.12",
+    "tqdm>=4.66",
+    "torch>=2.3",
+]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
