@@ -22,6 +22,14 @@ The DCS signal generator currently implements five signal-environment scales:
 
 The HDF5 output also stores inactive auxiliary demand fields for compatibility with the complete DCS framework.
 
+### Five-Scale Level Visualization
+
+The figure below shows representative DCS-generated I/Q constellations when one demand scale is varied from Level 1 to Level 5 while the remaining generation settings are held fixed. It visualizes the progressive effects of class granularity, observation length, SNR, channel fading, and synchronization offset on the received samples.
+
+<p align="center">
+  <img src="docs/images/dcs_signal_generator_five_scale_levels.png" alt="DCS signal generator five-scale level constellation examples" width="900">
+</p>
+
 ## Layout
 
 ```text
@@ -130,30 +138,30 @@ The Tr-AMR, MCNet, and E-A snapshots require PyTorch. IQFormer additionally impo
 
 ## AMC Knowledge Base Used by the DCS Agent
 
-The DCS Agent knowledge base contains **25 papers** covering convolutional, recurrent, Transformer, multi-representation, feature-based, data-augmentation, and denoising approaches to AMC. During feedback optimization, their structured records provide evidence for mapping an unmet demand scale to candidate source-code revisions. The first 21 references below are the most recent non-duplicate entries retained from `AMCagent/knowledge/json`; the final four are the representative algorithms evaluated in the paper. Because the legacy JSON records do not store persistent identifiers, their links use exact-title scholarly searches, whereas the four experimental papers use DOI links.
+The DCS Agent knowledge base uses **25 papers** selected from the accompanying literature catalogue. They cover efficient convolutional and recurrent architectures, Transformers, graph neural networks, multi-representation fusion, data augmentation, denoising, domain adaptation, and few-shot learning for AMC. During feedback optimization, their structured records provide evidence for mapping an unmet demand scale to candidate source-code revisions. Every title and publisher link below is traceable to the catalogue.
 
-1. [Contrastive Learning for Robust Automatic Modulation Classification](https://scholar.google.com/scholar?q=%22Contrastive+Learning+for+Robust+Automatic+Modulation+Classification%22) (2023)
-2. [Multi-Scale Feature Fusion for Robust Automatic Modulation Classification](https://scholar.google.com/scholar?q=%22Multi-Scale+Feature+Fusion+for+Robust+Automatic+Modulation+Classification%22) (2023)
-3. [CGDNet: Contourlet-Based Multi-Scale Decomposition Network for AMC](https://scholar.google.com/scholar?q=%22CGDNet%3A+Contourlet-Based+Multi-Scale+Decomposition+Network+for+AMC%22) (2022)
-4. [IQ and Constellation Diagram Fusion for Robust Modulation Classification](https://scholar.google.com/scholar?q=%22IQ+and+Constellation+Diagram+Fusion+for+Robust+Modulation+Classification%22) (2022)
-5. [Automatic Modulation Classification Using Transformer](https://scholar.google.com/scholar?q=%22Automatic+Modulation+Classification+Using+Transformer%22) (2021)
-6. [CNN-GRU Hybrid Network for Automatic Modulation Classification](https://scholar.google.com/scholar?q=%22CNN-GRU+Hybrid+Network+for+Automatic+Modulation+Classification%22) (2021)
-7. [Hierarchical Deep Learning for Automatic Modulation Classification](https://scholar.google.com/scholar?q=%22Hierarchical+Deep+Learning+for+Automatic+Modulation+Classification%22) (2021)
-8. [Multi-Task Learning for Joint Modulation Classification and SNR Estimation](https://scholar.google.com/scholar?q=%22Multi-Task+Learning+for+Joint+Modulation+Classification+and+SNR+Estimation%22) (2021)
-9. [GAN-based Data Augmentation for Modulation Classification with ACGAN](https://scholar.google.com/scholar?q=%22GAN-based+Data+Augmentation+for+Modulation+Classification+with+ACGAN%22) (2021)
-10. [Denoising Autoencoder for Robust Automatic Modulation Classification](https://scholar.google.com/scholar?q=%22Denoising+Autoencoder+for+Robust+Automatic+Modulation+Classification%22) (2021)
-11. [IC-AMCNet: Inception based CNN with Channel Attention for Automatic Modulation Classification](https://scholar.google.com/scholar?q=%22IC-AMCNet%3A+Inception+based+CNN+with+Channel+Attention+for+Automatic+Modulation+Classification%22) (2020)
-12. [AMRNet: Attention-based Multi-scale Residual Network for Automatic Modulation Classification](https://scholar.google.com/scholar?q=%22AMRNet%3A+Attention-based+Multi-scale+Residual+Network+for+Automatic+Modulation+Classification%22) (2020)
-13. [DenseNet for Automatic Modulation Classification](https://scholar.google.com/scholar?q=%22DenseNet+for+Automatic+Modulation+Classification%22) (2020)
-14. [Bidirectional LSTM for Automatic Modulation Classification](https://scholar.google.com/scholar?q=%22Bidirectional+LSTM+for+Automatic+Modulation+Classification%22) (2020)
-15. [CNN-SVM Hybrid Approach for Automatic Modulation Classification](https://scholar.google.com/scholar?q=%22CNN-SVM+Hybrid+Approach+for+Automatic+Modulation+Classification%22) (2019)
-16. [VGG-style Deep Learning for Automatic Modulation Classification](https://scholar.google.com/scholar?q=%22VGG-style+Deep+Learning+for+Automatic+Modulation+Classification%22) (2019)
-17. [Multi-Channel Long-term Deep Neural Network for Automatic Modulation Classification](https://scholar.google.com/scholar?q=%22Multi-Channel+Long-term+Deep+Neural+Network+for+Automatic+Modulation+Classification%22) (2019)
-18. [Deep Learning-Based Modulation Recognition for Software-Defined Radio](https://scholar.google.com/scholar?q=%22Deep+Learning-Based+Modulation+Recognition+for+Software-Defined+Radio%22) (2018)
-19. [Over-the-Air Deep Learning Based Radio Signal Classification](https://doi.org/10.1109/JSTSP.2018.2797022) (2018)
-20. [Wavelet Transform Based Modulation Classification](https://scholar.google.com/scholar?q=%22Wavelet+Transform+Based+Modulation+Classification%22) (2005)
-21. [Automatic Modulation Classification Using Higher-Order Cumulants](https://scholar.google.com/scholar?q=%22Automatic+Modulation+Classification+Using+Higher-Order+Cumulants%22) (2000)
-22. [MCNet: An Efficient CNN Architecture for Robust Automatic Modulation Classification](https://doi.org/10.1109/LCOMM.2020.2968030) (2020)
-23. [IQFormer: A Novel Transformer-Based Model With Multi-Modality Fusion for Automatic Modulation Recognition](https://doi.org/10.1109/TCCN.2024.3485118) (2025)
-24. [An Expert-Assistant Network With Temporal Shuffling for Efficient Automatic Modulation Recognition](https://doi.org/10.1109/TWC.2025.3645099) (2026)
-25. [Tr-AMR: A Lightweight Transformer With Enhanced Temporal Modeling for Automatic Modulation Recognition](https://doi.org/10.1002/dac.70447) (2026)
+1. [Knowledge Distillation for Modulation Classification in Resource-Constrained Devices](https://ieeexplore.ieee.org/document/11174704)
+2. [Self-Supervised Aligned Data Augmentation Network for Imbalanced Modulation Classification](https://ieeexplore.ieee.org/document/11007136)
+3. [AMCRN: Few-Shot Learning for Automatic Modulation Classification](https://ieeexplore.ieee.org/document/9650842)
+4. [An Efficient and Lightweight Model for Automatic Modulation Classification: A Hybrid Feature Extraction Network Combined with Attention Mechanism](https://www.mdpi.com/2079-9292/12/17/3661)
+5. [Automatic Modulation Classification for Adaptive OFDM Systems Using Convolutional Neural Networks With Residual Learning](https://ieeexplore.ieee.org/document/10154062)
+6. [A Wiener Filter Denoising Based Intelligent Modulation Recognition System](https://ieeexplore.ieee.org/document/9880789)
+7. [Automatic Modulation Classification Based on Hierarchical Recurrent Neural Networks With Grouped Auxiliary Memory](https://ieeexplore.ieee.org/document/9265251)
+8. [Automatic Modulation Classification Using CNN-LSTM Based Dual-Stream Structure](https://ieeexplore.ieee.org/document/9220797)
+9. [ConvLSTMAE: A Spatiotemporal Parallel Autoencoders for Automatic Modulation Classification](https://ieeexplore.ieee.org/document/9789162)
+10. [IRLNet: A Short-Time and Robust Architecture for Automatic Modulation Recognition](https://ieeexplore.ieee.org/document/9583289)
+11. [MCNet: An Efficient CNN Architecture for Robust Automatic Modulation Classification](https://ieeexplore.ieee.org/document/8963964)
+12. [GIGNet: A Graph-in-Graph Neural Network for Automatic Modulation Recognition](https://ieeexplore.ieee.org/document/10896841)
+13. [DTSG-Net: Dynamic Time Series Graph Neural Network and Its Application in Modulation Recognition](https://ieeexplore.ieee.org/document/10787244)
+14. [AvgNet: Adaptive Visibility Graph Neural Network and Its Application in Modulation Classification](https://ieeexplore.ieee.org/document/9695244)
+15. [A Modulation Classification Algorithm Based on Feature-Embedding Graph Convolutional Network](https://ieeexplore.ieee.org/document/10493016)
+16. [An Effective Masked Transformer Model for Automatic Modulation Recognition](https://ieeexplore.ieee.org/document/10934715)
+17. [Fine-Grained Modulation Classification Using Multi-Scale Radio Transformer With Dual-Channel Representation](https://ieeexplore.ieee.org/document/9690153)
+18. [Signal Modulation Classification Based on the Transformer Network](https://ieeexplore.ieee.org/document/9779340)
+19. [Abandon Locality: Frame-Wise Embedding Aided Transformer for Automatic Modulation Recognition](https://ieeexplore.ieee.org/document/9915584)
+20. [IQFormer: A Novel Transformer-Based Model With Multi-Modality Fusion for Automatic Modulation Recognition](https://ieeexplore.ieee.org/document/10729886)
+21. [A Transformer-Based Contrastive Semi-Supervised Learning Framework for Automatic Modulation Recognition](https://ieeexplore.ieee.org/document/10093837)
+22. [Automatic Modulation Recognition Based on Deep-Learning Features Fusion of Signal and Constellation Diagram](https://www.mdpi.com/2079-9292/12/3/552)
+23. [Cross-Domain Automatic Modulation Classification: A Multimodal-Information-Based Progressive Unsupervised Domain Adaptation Network](https://ieeexplore.ieee.org/document/10738272)
+24. [Modulation Classifier: A Few-Shot Learning Semi-Supervised Method Based on Multimodal Information and Domain Adversarial Network](https://ieeexplore.ieee.org/document/9966586)
+25. [CFCS: A Robust and Efficient Collaboration Framework for Automatic Modulation Recognition](https://ieeexplore.ieee.org/document/10272355)
