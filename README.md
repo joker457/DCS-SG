@@ -22,6 +22,14 @@ The DCS signal generator currently implements five signal-environment scales:
 
 The HDF5 output also stores inactive auxiliary demand fields for compatibility with the complete DCS framework.
 
+### Five-Scale Level Visualization
+
+The figure below shows representative DCS-generated I/Q constellations when one demand scale is varied from Level 1 to Level 5 while the remaining generation settings are held fixed. It visualizes the progressive effects of class granularity, observation length, SNR, channel fading, and synchronization offset on the received samples.
+
+<p align="center">
+  <img src="docs/images/dcs_signal_generator_five_scale_levels.png" alt="DCS signal generator five-scale level constellation examples" width="900">
+</p>
+
 ## Layout
 
 ```text
