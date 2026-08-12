@@ -1,0 +1,32 @@
+[
+  {
+    "action_id": "mcnet_observation_aware_residual_gates",
+    "target_scales": [
+      "observation_length",
+      "snr",
+      "channel_fading",
+      "synchronization_offset"
+    ],
+    "required_backbone": "MCNet",
+    "summary": "Add observation-aware masked pooling and zero-start residual channel and temporal gates.",
+    "implementation": [
+      "MCNetEnhanced._obs_width_mask",
+      "MCNetEnhanced._masked_pool",
+      "ResidualChannelGate",
+      "ResidualTemporalGate"
+    ],
+    "evidence_score": 3,
+    "implementation_cost": 2,
+    "globally_optimal": false
+  },
+  {
+    "action_id": "mcnet_generic_classifier_expansion",
+    "target_scales": ["class_granularity"],
+    "required_backbone": "MCNet",
+    "summary": "Expand only the classifier capacity.",
+    "implementation": ["classifier"],
+    "evidence_score": 1,
+    "implementation_cost": 1,
+    "globally_optimal": false
+  }
+]

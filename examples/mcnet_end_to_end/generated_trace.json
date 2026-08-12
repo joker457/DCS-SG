@@ -1,0 +1,70 @@
+{
+  "trace_id": "mcnet_dcs_feedback_representative",
+  "target_accuracy": 0.5,
+  "gap_definition": "max(0, target_accuracy - case_accuracy)",
+  "backbone": "MCNet",
+  "before_gap_by_scale": {
+    "channel_fading": 0.31878422866666667,
+    "class_granularity": 0.2596537824,
+    "observation_length": 0.40527006934666665,
+    "snr": 0.32258653829333334,
+    "synchronization_offset": 0.28416128868
+  },
+  "highest_gap_scale": "observation_length",
+  "selected_action": {
+    "action_id": "mcnet_observation_aware_residual_gates",
+    "target_scales": [
+      "observation_length",
+      "snr",
+      "channel_fading",
+      "synchronization_offset"
+    ],
+    "required_backbone": "MCNet",
+    "summary": "Add observation-aware masked pooling and zero-start residual channel and temporal gates.",
+    "implementation": [
+      "MCNetEnhanced._obs_width_mask",
+      "MCNetEnhanced._masked_pool",
+      "ResidualChannelGate",
+      "ResidualTemporalGate"
+    ],
+    "evidence_score": 3,
+    "implementation_cost": 2,
+    "globally_optimal": false
+  },
+  "model_change": {
+    "source": "model_sources/mcnet/mcnet_model.py",
+    "before": "MCNet",
+    "after": "MCNetEnhanced"
+  },
+  "validation": {
+    "observation_level_3": {
+      "before": 0.4819636561,
+      "after": 0.8909682669
+    },
+    "snr_observation_bivariate": {
+      "before": 0.0476739455,
+      "after": 0.3888512139
+    },
+    "source_dataset": {
+      "before": 0.5821361502,
+      "after": 0.5936952269
+    },
+    "after_gap_by_scale": {
+      "channel_fading": 0.17990807406666667,
+      "class_granularity": 0.008619650400000012,
+      "observation_length": 0.1780821918,
+      "snr": 0.16183501166666667,
+      "synchronization_offset": 0.14724897146666666
+    }
+  },
+  "decision": {
+    "accepted": true,
+    "stopping_reason": "one_round_iteration_budget"
+  },
+  "scope": {
+    "split": "fixed_disjoint_70_30_development_split",
+    "checkpoint_selected_on_evaluation_split": true,
+    "independent_final_seed": false,
+    "global_optimality_guarantee": false
+  }
+}

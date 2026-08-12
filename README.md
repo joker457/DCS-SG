@@ -6,7 +6,7 @@ The DCS signal generator (repository identifier: **DCS-SG**) is the signal-gener
 
 Within the complete DCS Agent loop, the generator constructs scale-conditioned test sets; the agent evaluates candidate AMC algorithms, compares measured capability with the target demand profile, and uses unmet probes together with an AMC knowledge base to guide model revision and retesting.
 
-This repository contains only the core generation and probe-planning logic. Generated HDF5 data, checkpoints, training logs, paper drafts, the agent implementation, and model-specific training code are intentionally excluded.
+This repository contains the core generation and probe-planning logic, model-definition snapshots, exact normalized scale parameterization, and an auditable feedback trace. Generated HDF5 data, checkpoints, training logs, paper drafts, full model-specific training wrappers, and production agent orchestration are intentionally excluded.
 
 ## Core Controls
 
@@ -107,6 +107,7 @@ The profile only controls case planning and records a reference model packing le
 - `--seed` controls deterministic sample identity. Changing `--batch-size` does not change generated samples in deterministic mode.
 - For negative SNR lists, prefer the equals form, for example `--snrs=-20,-18,-16`.
 - Full experiment generation with `reps=512` can create large HDF5 files. Keep `generated_data/` outside commits or rely on `.gitignore`.
+- The five levels are ordinal simulation stress bins in normalized baseband units, not universal standards-defined environment categories. See [`docs/scale_parameterization.md`](docs/scale_parameterization.md) for exact ranges and physical-unit conversions.
 
 ## Using the DCS Signal Generator with the DCS Agent
 
@@ -120,6 +121,8 @@ A typical model-specific experiment can use the case rules collected here as fol
 6. return scale-wise performance gaps to the DCS Agent for knowledge-constrained model revision and retesting.
 
 The generation pipeline preserves steps 1-3. The architecture snapshots under `model_sources/` document the models used in steps 4-6, but their dataset packing, checkpoint loading, training, and evaluation entry points remain model-specific.
+
+The evidence consumed by the agent, its heuristic action rule, acceptance/stopping conditions, and current experimental limitations are specified in [`docs/agent_feedback_protocol.md`](docs/agent_feedback_protocol.md). The runnable [`examples/mcnet_end_to_end/`](examples/mcnet_end_to_end/) example reconstructs one reported feedback cycle from probe records to action selection and before/after validation.
 
 ## Model Source Snapshots
 
