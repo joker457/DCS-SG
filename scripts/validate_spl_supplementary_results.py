@@ -10,8 +10,8 @@ import numpy as np
 import pandas as pd
 
 
-HERE = Path(__file__).resolve().parent
-DATA_DIR = HERE / "data"
+ROOT = Path(__file__).resolve().parents[1]
+DATA_DIR = ROOT / "data"
 MODELS = ["Tr-AMR", "MCNet", "IQFormer", "E-A"]
 BOUNDARY_COLUMNS = [
     "model",
@@ -50,12 +50,12 @@ def require(condition: bool, message: str) -> None:
 
 
 def verify_checksums() -> None:
-    manifest = HERE / "checksums.sha256"
+    manifest = DATA_DIR / "spl_supplementary_checksums.sha256"
     for line in manifest.read_text(encoding="ascii").splitlines():
         if not line.strip():
             continue
         expected, relative_path = line.split(maxsplit=1)
-        path = HERE / relative_path
+        path = ROOT / relative_path
         actual = hashlib.sha256(path.read_bytes()).hexdigest()
         require(actual == expected, f"SHA-256 mismatch: {relative_path}")
     print("Paper-artifact SHA-256 checks: PASS")

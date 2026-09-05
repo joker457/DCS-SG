@@ -9,8 +9,11 @@ dist/
 # Generated data and experiment artifacts
 generated_data/
 data*/
-!paper_results/spl_supplementary/data/
-!paper_results/spl_supplementary/data/**
+!data/
+data/*
+!data/*.csv
+!data/*.json
+!data/*.sha256
 runs/
 logs/
 *.h5

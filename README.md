@@ -32,9 +32,51 @@ The figure below shows representative DCS-generated I/Q constellations when one 
 
 ## Paper Experiment Results
 
-The audited SPL supplementary measurements, published figures, and plotting/validation scripts are available in [`paper_results/spl_supplementary/`](paper_results/spl_supplementary/README.md). They include single-scale accuracy over Levels 1-5, actual accuracy for all ten bivariate Level-5 probes and the All-5 setting, the `+Ours` deployment profile, and the compact four-experiment summary.
+This repository includes the audited aggregate measurements and visualizations that accompanied the SPL submission. They cover four reproduced AMC backbones, denoted **Original**, and the corresponding DCS Agent revisions, denoted **+Ours**. The accuracy values are measured results, not fitted or manually adjusted curves. CSV accuracies are stored as fractions in `[0, 1]` and are converted to percentages only for plotting.
 
-These files reproduce the paper figures from aggregate measurements. They do not add the generated HDF5 datasets, checkpoints, or complete model-specific retraining pipelines excluded from this repository.
+### Evaluation Protocol and Scope
+
+For each DCS case, deterministically generated samples were split once into disjoint 70% training and 30% evaluation subsets. Evaluation samples were excluded from gradient updates, and Original and +Ours used identical indices for paired comparison. The same evaluation subset was also used for checkpoint selection, so these values are held-out development measurements rather than independently seeded confirmation-test estimates.
+
+The committed tables reproduce figures from aggregate measurements. They do not provide full model retraining: generated HDF5 files, checkpoints, training logs, and model-specific training wrappers remain outside this repository.
+
+### Single-Scale Demand Levels
+
+[`data/boundary_dimension_level_detail.csv`](data/boundary_dimension_level_detail.csv) contains Levels 0-5 for SNR, observation length, channel fading, synchronization offset, and class granularity. Level 0 is a calibration condition; the figure uses Levels 1-5, yielding 100 plotted Original/+Ours point pairs across four models and five scales.
+
+![Single-scale probe accuracy](docs/images/single_scale_boundary_curves.png)
+
+### Ten Bivariate Level-5 Probes and All-5
+
+[`data/stress_case_detail.csv`](data/stress_case_detail.csv) contains the actual accuracy for all ten pairs of the five signal scales with both focal scales set to Level 5, plus the setting in which all five scales are Level 5. The CSV records the remaining scale settings and SNR lists used for every model and case.
+
+![Bivariate and All-5 accuracy](docs/images/bivariate_stress_accuracy.png)
+
+The optimized mean over the ten bivariate probes is 51.95% for Tr-AMR, 57.51% for MCNet, 70.02% for IQFormer, and 57.10% for E-A. Their optimized All-5 accuracies are 20.08%, 19.27%, 30.41%, and 19.50%, respectively.
+
+### Deployment Profile of +Ours
+
+![Deployment profile](docs/images/deployment_resource_profile.png)
+
+Bubble area represents complete FP32 model size, calculated as `parameter_count * 4 / 1024^2` MiB. CPU latency is per sample at batch size 1 with eight CPU threads. IQFormer end-to-end latency includes 0.0848 ms/sample for external SciPy STFT construction, and its raw-plus-STFT input contains 17 times as many scalar values as its raw I/Q input. The recorded run used PyTorch 2.9.1 and an NVIDIA GeForce RTX 4090 for the GPU columns. The CPU model was not recorded, so the latency values should be treated as run-specific measurements rather than hardware-independent constants.
+
+[`data/four_experiment_delta_summary.csv`](data/four_experiment_delta_summary.csv) supports auditing the aggregate source-dataset, boundary, Level-5, bivariate, and All-5 results. Its `boundary_mean_acc` fields average Levels 0-5, including the calibration level; `boundary_l5_mean_acc` averages only the five Level-5 single-scale cases.
+
+### Reproduce and Validate
+
+From the repository root:
+
+```powershell
+python -m pip install pandas matplotlib
+python scripts\validate_spl_supplementary_results.py --check-paper-hashes
+python scripts\plot_spl_supplementary_results.py
+```
+
+The validator reconstructs each published CSV from the lower-level aggregate inputs, verifies case counts and accuracy deltas, checks the aggregate means, and optionally checks deterministic CSV, JSON, and PNG SHA-256 values against the audited SPL artifacts. PDF hashes are excluded because Matplotlib embeds a creation timestamp; figure hashes can also differ after regeneration with another Matplotlib or font version even when all plotted coordinates are unchanged.
+
+### Ablation Audit
+
+No component-level architecture ablation is included in this snapshot. The available exploratory Tr-AMR All-5 runs were incomplete or used different training settings, and the available IQFormer adapter comparisons used different optimization budgets. They do not isolate one component under a controlled protocol and are therefore not presented as ablation evidence.
 
 ## Layout
 
@@ -45,12 +87,16 @@ DCS-SG/
     generator.py           # batched PyTorch IQ-signal synthesis and impairments
     storage.py             # HDF5 writer bucketed by observation length
   scripts/
-    generate_dataset.py    # raw DCS signal generation entry
-    plan_boundary_cases.py # boundary/stress case planner for profile-based runs
+    generate_dataset.py                       # raw DCS signal generation entry
+    plan_boundary_cases.py                    # boundary/stress case planner
+    plot_spl_supplementary_results.py         # paper-result plotting
+    validate_spl_supplementary_results.py     # aggregate-result validation
+  data/
+    *.csv, *.json, *.sha256 # audited measurements and checksum manifest
+  docs/images/
+    *.png, *.pdf           # generator and paper-result visualizations
   examples/
     *.csv, *.txt           # lightweight generated plans/commands
-  paper_results/
-    spl_supplementary/     # audited result tables, figures, and reproduction scripts
   model_sources/
     tr_amr/                # agent-reproduced Tr-AMR and its DCS Agent revision
     mcnet/                 # agent-reproduced MCNet and MCNetEnhanced

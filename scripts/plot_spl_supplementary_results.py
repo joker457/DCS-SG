@@ -11,9 +11,9 @@ import numpy as np
 import pandas as pd
 
 
-HERE = Path(__file__).resolve().parent
-DATA_DIR = HERE / "data"
-OUT_DIR = HERE / "figures"
+ROOT = Path(__file__).resolve().parents[1]
+DATA_DIR = ROOT / "data"
+OUT_DIR = ROOT / "docs" / "images"
 EXPORT_DIR = DATA_DIR
 
 MODELS = ["Tr-AMR", "MCNet", "IQFormer", "E-A"]
