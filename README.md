@@ -42,7 +42,7 @@ The committed tables reproduce figures from aggregate measurements. They do not 
 
 ### Single-Scale Demand Levels
 
-[`data/boundary_dimension_level_detail.csv`](data/boundary_dimension_level_detail.csv) contains Levels 0-5 for SNR, observation length, channel fading, synchronization offset, and class granularity. Level 0 is a calibration condition; the figure uses Levels 1-5, yielding 100 plotted Original/+Ours point pairs across four models and five scales.
+[`data/boundary_dimension_level_detail.csv`](data/boundary_dimension_level_detail.csv) contains Levels 1-5 for SNR, observation length, channel fading, synchronization offset, and class granularity, yielding 100 plotted Original/+Ours point pairs across four models and five scales.
 
 ![Single-scale probe accuracy](docs/images/single_scale_boundary_curves.png)
 
@@ -60,7 +60,7 @@ The optimized mean over the ten bivariate probes is 51.95% for Tr-AMR, 57.51% fo
 
 Bubble area represents complete FP32 model size, calculated as `parameter_count * 4 / 1024^2` MiB. CPU latency is per sample at batch size 1 with eight CPU threads. IQFormer end-to-end latency includes 0.0848 ms/sample for external SciPy STFT construction, and its raw-plus-STFT input contains 17 times as many scalar values as its raw I/Q input. The recorded run used PyTorch 2.9.1 and an NVIDIA GeForce RTX 4090 for the GPU columns. The CPU model was not recorded, so the latency values should be treated as run-specific measurements rather than hardware-independent constants.
 
-[`data/four_experiment_delta_summary.csv`](data/four_experiment_delta_summary.csv) supports auditing the aggregate source-dataset, boundary, Level-5, bivariate, and All-5 results. Its `boundary_mean_acc` fields average Levels 0-5, including the calibration level; `boundary_l5_mean_acc` averages only the five Level-5 single-scale cases.
+[`data/four_experiment_delta_summary.csv`](data/four_experiment_delta_summary.csv) supports auditing the aggregate source-dataset, boundary, Level-5, bivariate, and All-5 results. Its `boundary_mean_acc` fields average Levels 1-5; `boundary_l5_mean_acc` averages only the five Level-5 single-scale cases.
 
 ### Reproduce and Validate
 

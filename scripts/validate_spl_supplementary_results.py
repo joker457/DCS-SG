@@ -64,8 +64,10 @@ def verify_checksums() -> None:
 def verify_boundary_export() -> pd.DataFrame:
     source = pd.read_csv(DATA_DIR / "boundary_dimension_level_detail.csv")
     published = pd.read_csv(DATA_DIR / "single_scale_boundary_curves_data.csv")
-    expected = source[source["level_num"].astype(int).between(1, 5)][BOUNDARY_COLUMNS]
-    expected = expected.reset_index(drop=True)
+    source["level_num"] = source["level_num"].astype(int)
+    require(set(source["level_num"]) == set(range(1, 6)), "Boundary data must contain Levels 1-5 only")
+    require(len(source) == 100, "Expected 4 models x 5 dimensions x 5 levels in source data")
+    expected = source[BOUNDARY_COLUMNS].reset_index(drop=True)
 
     pd.testing.assert_frame_equal(expected, published, check_exact=True)
     require(len(published) == 100, "Expected 4 models x 5 dimensions x 5 levels")
