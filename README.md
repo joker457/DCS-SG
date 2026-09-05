@@ -30,6 +30,12 @@ The figure below shows representative DCS-generated I/Q constellations when one 
   <img src="docs/images/dcs_signal_generator_five_scale_levels.png" alt="DCS signal generator five-scale level constellation examples" width="900">
 </p>
 
+## Paper Experiment Results
+
+The audited SPL supplementary measurements, published figures, and plotting/validation scripts are available in [`paper_results/spl_supplementary/`](paper_results/spl_supplementary/README.md). They include single-scale accuracy over Levels 1-5, actual accuracy for all ten bivariate Level-5 probes and the All-5 setting, the `+Ours` deployment profile, and the compact four-experiment summary.
+
+These files reproduce the paper figures from aggregate measurements. They do not add the generated HDF5 datasets, checkpoints, or complete model-specific retraining pipelines excluded from this repository.
+
 ## Layout
 
 ```text
@@ -43,6 +49,8 @@ DCS-SG/
     plan_boundary_cases.py # boundary/stress case planner for profile-based runs
   examples/
     *.csv, *.txt           # lightweight generated plans/commands
+  paper_results/
+    spl_supplementary/     # audited result tables, figures, and reproduction scripts
   model_sources/
     tr_amr/                # agent-reproduced Tr-AMR and its DCS Agent revision
     mcnet/                 # agent-reproduced MCNet and MCNetEnhanced

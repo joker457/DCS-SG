@@ -9,6 +9,8 @@ dist/
 # Generated data and experiment artifacts
 generated_data/
 data*/
+!paper_results/spl_supplementary/data/
+!paper_results/spl_supplementary/data/**
 runs/
 logs/
 *.h5
