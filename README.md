@@ -6,7 +6,7 @@ The DCS signal generator (repository identifier: **DCS-SG**) is the signal-gener
 
 Within the complete DCS Agent loop, the generator constructs scale-conditioned test sets; the agent evaluates candidate AMC algorithms, compares measured capability with the target demand profile, and uses unmet probes together with an AMC knowledge base to guide model revision and retesting.
 
-This repository contains the core generation and probe-planning logic, model-definition snapshots, exact normalized scale parameterization, and an auditable feedback trace. Generated HDF5 data, checkpoints, training logs, paper drafts, full model-specific training wrappers, and production agent orchestration are intentionally excluded.
+This repository contains the core generation and probe-planning logic, model-definition snapshots, exact normalized scale parameterization, and an auditable feedback trace.
 
 ## Core Controls
 
@@ -34,11 +34,9 @@ The figure below shows representative DCS-generated I/Q constellations when one 
 
 This repository includes the audited aggregate measurements and visualizations that accompanied the SPL submission. They cover four reproduced AMC backbones, denoted **Original**, and the corresponding DCS Agent revisions, denoted **+Ours**. The accuracy values are measured results, not fitted or manually adjusted curves. CSV accuracies are stored as fractions in `[0, 1]` and are converted to percentages only for plotting.
 
-### Evaluation Protocol and Scope
+### Evaluation Protocol
 
 For each DCS case, deterministically generated samples were split once into disjoint 70% training and 30% evaluation subsets. Evaluation samples were excluded from gradient updates, and Original and +Ours used identical indices for paired comparison. The same evaluation subset was also used for checkpoint selection, so these values are held-out development measurements rather than independently seeded confirmation-test estimates.
-
-The committed tables reproduce figures from aggregate measurements. They do not provide full model retraining: generated HDF5 files, checkpoints, training logs, and model-specific training wrappers remain outside this repository.
 
 ### Single-Scale Demand Levels
 
@@ -73,10 +71,6 @@ python scripts\plot_spl_supplementary_results.py
 ```
 
 The validator reconstructs each published CSV from the lower-level aggregate inputs, verifies case counts and accuracy deltas, checks the aggregate means, and optionally checks deterministic CSV, JSON, and PNG SHA-256 values against the audited SPL artifacts. PDF hashes are excluded because Matplotlib embeds a creation timestamp; figure hashes can also differ after regeneration with another Matplotlib or font version even when all plotted coordinates are unchanged.
-
-### Ablation Audit
-
-No component-level architecture ablation is included in this snapshot. The available exploratory Tr-AMR All-5 runs were incomplete or used different training settings, and the available IQFormer adapter comparisons used different optimization budgets. They do not isolate one component under a controlled protocol and are therefore not presented as ablation evidence.
 
 ## Layout
 
@@ -174,7 +168,7 @@ A typical model-specific experiment can use the case rules collected here as fol
 5. train and evaluate the target model;
 6. return scale-wise performance gaps to the DCS Agent for knowledge-constrained model revision and retesting.
 
-The generation pipeline preserves steps 1-3. The architecture snapshots under `model_sources/` document the models used in steps 4-6, but their dataset packing, checkpoint loading, training, and evaluation entry points remain model-specific.
+The generation pipeline implements steps 1-3. Model-specific projects handle dataset packing, checkpoint loading, training, and evaluation for steps 4-6, while the architecture snapshots under `model_sources/` document the models used in those stages.
 
 The evidence consumed by the agent, its heuristic action rule, acceptance/stopping conditions, and current experimental limitations are specified in [`docs/agent_feedback_protocol.md`](docs/agent_feedback_protocol.md). The runnable [`examples/mcnet_end_to_end/`](examples/mcnet_end_to_end/) example reconstructs one reported feedback cycle from probe records to action selection and before/after validation.
 
@@ -191,7 +185,7 @@ The evidence consumed by the agent, its heuristic action rule, acceptance/stoppi
 
 The IQFormer snapshot additionally retains `IQFormer_enhanced.py`, `IQFormer_adapter.py`, and `utils/stft_features.py`, which were used to compare front-end/fusion and residual-adapter alternatives during development. The channel-adapter implementation listed in the table is the primary improved variant used for the reported DCS boundary and stress results.
 
-The Tr-AMR, MCNet, and E-A snapshots require PyTorch. IQFormer additionally imports `einops` and `timm`. Install these optional dependencies with `pip install -r model_sources/requirements.txt`. They are deliberately kept separate from the core DCS-SG requirements because raw signal generation does not use the classifier implementations. Checkpoints, generated datasets, and model-specific training wrappers are not included.
+The Tr-AMR, MCNet, and E-A snapshots require PyTorch. IQFormer additionally imports `einops` and `timm`. Install these optional dependencies with `pip install -r model_sources/requirements.txt`. They are kept separate from the core DCS-SG requirements because raw signal generation does not use the classifier implementations.
 
 ## AMC Knowledge Base Used by the DCS Agent
 
